@@ -10,6 +10,8 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    lazy var game = Memorygame(numberOfPairsOfCards: cardButons.count / 2)
+    
     var flipCount = 0 {
         didSet {
         flipCountLabel.text = "Flips: \(flipCount)"
@@ -23,21 +25,30 @@ class ViewController: UIViewController {
     @IBAction func flipCard(_ sender: UIButton) {
         flipCount += 1
         if let cardNumber = cardButons.index(of: sender) {
-            touchCard(withEmoji: emojis[cardNumber], on:sender)
+            game.chooseCard(at: cardNumber)
+            updateViewFromModel()
         } else {
             print("was not in cards")
         }
         
     }
     
-    func touchCard(withEmoji emoji: String, on button: UIButton) {
-        if button.currentTitle == emoji {
-            button.setTitle("", for: UIControlState.normal)
-            button.backgroundColor = #colorLiteral(red: 0, green: 0.9914394021, blue: 1, alpha: 1)
-        } else {
-            button.setTitle(emoji, for: UIControlState.normal)
-            button.backgroundColor = #colorLiteral(red: 0, green: 0.9914394021, blue: 1, alpha: 1)
+    func updateViewFromModel () {
+        for index in cardButons.indices {
+            let button = cardButons[index]
+            let card = game.cards[index]
+            if card.isFaceUp {
+                button.setTitle(emoji(for: card), for: UIControlState.normal)
+                button.backgroundColor = #colorLiteral(red: 0, green: 0.9914394021, blue: 1, alpha: 1)
+            } else {
+                button.setTitle("", for: UIControlState.normal)
+                button.backgroundColor = card.isMatched ? #colorLiteral(red: 0, green: 0.9914394021, blue: 1, alpha: 0) : #colorLiteral(red: 0, green: 0.9914394021, blue: 1, alpha: 1)
+            }
         }
+    }
+    
+    func emoji(for card: Card) -> String{
+        return "?"
     }
 }
 

@@ -17,7 +17,9 @@ class ViewController: UIViewController {
         flipCountLabel.text = "Flips: \(flipCount)"
         }
     }
-    var emojis = ["😱", "👻", "🍍", "🍉"]
+    
+    var emojis = ["😱", "👻", "🍍", "🍉", "🏄‍♀️"]
+    
     @IBOutlet weak var flipCountLabel: UILabel!
     
     @IBOutlet var cardButons: [UIButton]!
@@ -30,7 +32,6 @@ class ViewController: UIViewController {
         } else {
             print("was not in cards")
         }
-        
     }
     
     func updateViewFromModel () {
@@ -47,8 +48,14 @@ class ViewController: UIViewController {
         }
     }
     
-    func emoji(for card: Card) -> String{
-        return "?"
+    var emojiz = [Int: String]()
+    
+    func emoji (for card: Card) -> String {
+        if emojiz[card.identifier] == nil, emojis.count > 0 {
+            let randomIndex = Int(arc4random_uniform(UInt32(emojis.count)))
+            emojiz[card.identifier] = emojis.remove(at: randomIndex)
+        }
+        return emojiz[card.identifier] ?? "?"
     }
 }
 

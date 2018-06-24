@@ -25,6 +25,7 @@ class Memorygame
             let card = Card()
             cards += [card, card]
         }
+        print(cards)
     }
     // shuffle cards
 }

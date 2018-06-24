@@ -18,7 +18,7 @@ class ViewController: UIViewController {
         }
     }
     
-    var emojis = ["😱", "👻", "🍍", "🍉", "🏄‍♀️"]
+    var emojis = ["😱", "👻", "🍍", "🍉", "🏄‍♀️", "🏀", "🎯", "🎮"]
     
     @IBOutlet weak var flipCountLabel: UILabel!
     

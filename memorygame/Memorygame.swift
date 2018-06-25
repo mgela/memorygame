@@ -12,7 +12,26 @@ class Memorygame
 {
     var cards = [Card]()
     
-    var indexOfOneAndOnlyFaceUpCard: Int?
+    var indexOfOneAndOnlyFaceUpCard: Int? {
+        get {
+            var foundIndex: Int?
+            for index in cards.indices {
+                if cards[index].isFaceUp {
+                    if foundIndex == nil {
+                        foundIndex = index
+                    } else {
+                        return nil
+                    }
+                }
+            }
+            return foundIndex
+        }
+        set {
+            for index in cards.indices {
+                cards[index].isFaceUp = (index == newValue)
+            }
+        }
+    }
     
     func chooseCard(at index: Int) {
         if !cards[index].isMatched {
@@ -23,23 +42,28 @@ class Memorygame
                     cards[index].isMatched = true
                 }
                 cards[index].isFaceUp = true
-                indexOfOneAndOnlyFaceUpCard = nil
             } else {
-                for flipdownIndex in cards.indices {
-                    cards[flipdownIndex].isFaceUp = false
-                }
-                cards[index].isFaceUp = true
                 indexOfOneAndOnlyFaceUpCard = index
             }
         }
     }
     
     init(numberOfPairsOfCards: Int) {
+        
+        
+        
         for _ in 1...numberOfPairsOfCards {
             let card = Card()
             cards += [card, card]
         }
-        print(cards)
+        
+        var shuffledCards = [Card]()
+        
+        for _ in 0..<cards.count {
+            let rand = Int(arc4random_uniform(UInt32(cards.count)))
+            print(cards[1], cards[2])
+            shuffledCards.append(cards[rand])
+        }
+        cards = shuffledCards
     }
-    // shuffle cards
 }

@@ -12,6 +12,10 @@ class ViewController: UIViewController {
     
     lazy var game = Memorygame(numberOfPairsOfCards: cardButons.count / 2)
     
+    var numberOfPairsOfCards: Int {
+        return (cardButons.count + 1) / 2
+    }
+    
     var flipCount = 0 {
         didSet {
         flipCountLabel.text = "Flips: \(flipCount)"
@@ -27,6 +31,7 @@ class ViewController: UIViewController {
     @IBAction func flipCard(_ sender: UIButton) {
         flipCount += 1
         if let cardNumber = cardButons.index(of: sender) {
+            print(cardNumber)
             game.chooseCard(at: cardNumber)
             updateViewFromModel()
         } else {
